@@ -2,7 +2,6 @@
 # Import relevant Python libraries
 import streamlit as st
 import requests
-import matplotlib.pyplot as plt
 import cv2
 import numpy as np
 import os.path
