@@ -9,26 +9,25 @@ import os.path
 # Var initialisation
 url = 'https://fxa-ocrp08-flaskapi.azurewebsites.net/predict_mask'
 
-REP = ".\images"
+REP = "app/static/"
 images = []
 END = "_leftImg8bit.png"
+MEND = "_gtFine_color.png"
 
 # Loop in the image folder
 for i, file in enumerate(os.listdir(REP)):
-	
 	if file.endswith(END):
 		filename = file.replace(END, "")
 		images.append(filename)
-
 
 st.title("P08 - Participez à la conception d'une voiture autonome")
 image = st.selectbox(
         "Select the image you want to try :",
         images
-    )
+		)
 
-image_path = "images/"+image+END
-image_mask = "images/"+image+"_gtFine_color.png"
+image_path = REP+image+END
+image_mask = REP+image+MEND
 
 # Create the image data to be used in the request
 image_data = {'image': open(image_path, 'rb')}
