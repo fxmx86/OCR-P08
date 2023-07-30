@@ -9,7 +9,7 @@ import os.path
 # Var initialisation
 url = 'https://fxa-ocrp08-flaskapi.azurewebsites.net/predict_mask'
 
-REP = "app/static/"
+REP = "./app/static/"
 images = []
 END = "_leftImg8bit.png"
 MEND = "_gtFine_color.png"
