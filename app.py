@@ -1,4 +1,4 @@
-# Access via http://fxa-ocrp08-flaskapi.azurewebsites.net:5000
+# Access via http://fxa-ocrp08-flaskapi.azurewebsites.net
 
 # Start importing relevant librairies
 import mimetypes
