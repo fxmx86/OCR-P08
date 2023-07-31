@@ -7,9 +7,10 @@ import numpy as np
 import os.path
 
 # Var initialisation
-url = 'https://fxa-ocrp08-flaskapi.azurewebsites.net/predict_mask'
+#url = 'https://mask-segmentation-app.azurewebsites.net/predict_mask'
+url = 'http://localhost:5000/predict_mask'
 
-REP = "./streamlit/images/"
+REP = "static/"
 images = []
 END = "_leftImg8bit.png"
 MEND = "_gtFine_color.png"
@@ -37,7 +38,8 @@ image_data = {'image': open(image_path, 'rb')}
 r = requests.post(url, files=image_data)
 
 # Convert the bytes to numpy array
-img_array = cv2.imdecode(np.frombuffer(r.content, np.uint8), -1)
+#img_array = cv2.imdecode(np.frombuffer(r.content, np.uint8), -1)
+img_array = np.asarray(np.frombuffer(r.content, np.uint8))
 
 # Display the initial color image
 st.image(image_path, caption='Initial color image')
