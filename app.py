@@ -14,8 +14,8 @@ from matplotlib import colors
 model_path = "./model"
 
 # Input dimensions expected by your Keras model
-MODEL_INPUT_WIDTH = 512
-MODEL_INPUT_HEIGHT = 256
+MODEL_INPUT_WIDTH = 768
+MODEL_INPUT_HEIGHT = 384
 
 # Load the Keras model
 MODEL = load_model(model_path, compile=False)
