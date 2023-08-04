@@ -40,9 +40,9 @@ r = requests.post(url, files=image_data)
 img_array = cv2.imdecode(np.frombuffer(r.content, np.uint8), -1)
 
 # Display the initial color image
-st.image(image_path, caption='Initial color image', width=384)
+st.image(image_path, caption='Initial color image', width=768)
 # Display the initial mask color image
-st.image(image_mask, caption='Initial mask color image', width=384)
+st.image(image_mask, caption='Initial mask color image', width=768)
 
 # Display the image array of the mask color image
-st.image(img_array, caption='Predicted mask color image', width=384)
+st.image(img_array, caption='Predicted mask color image', width=768)
