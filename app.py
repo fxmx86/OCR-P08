@@ -1,4 +1,4 @@
-# Access via http://fxa-ocrp08-flaskapi.azurewebsites.net
+# API Flask : access via http://fxa-ocrp08-flaskapi.azurewebsites.net
 
 # Start importing relevant librairies
 import mimetypes
@@ -11,50 +11,44 @@ import numpy as np
 from matplotlib import colors
 
 # Path to the Keras model
-model_path = "./model"
+MODEL_PATH = "./model"
 
 # Input dimensions expected by your Keras model
-MODEL_INPUT_WIDTH = 768
-MODEL_INPUT_HEIGHT = 384
+MODEL_INPUT_WIDTH = 1024
+MODEL_INPUT_HEIGHT = 512
 
 # Load the Keras model
-MODEL = load_model(model_path, compile=False)
+model = load_model(MODEL_PATH, compile=False)
 
 
-def generate_img_from_mask(mask, colors_palette=['b', 'g', 'r', 'c', 'm', 'y', 'k', 'w']):
+#def generate_img_from_mask(mask, palette=['b', 'g', 'r', 'c', 'm', 'y', 'k', 'w']):
+def generate_img_from_mask(mask, palette=['gray', 'purple', 'black', 'steelblue', 'olivedrab', 'orange', 'red', 'mediumblue']):
     '''Generate a color image array from a segmented mask
     Args:
       mask - numpy array of dimension
-      colors_palette - list - color to be assigned to each class
+      palette - colors list to be assigned to each class
     Returns
       Image array'''
 
-    id2category = {0: 'void',
-                   1: 'flat',
-                   2: 'construction',
-                   3: 'object',
-                   4: 'nature',
-                   5: 'sky',
-                   6: 'human',
-                   7: 'vehicle'}
+    CAT_DICT = {0: 'void', 1: 'flat', 2: 'construction', 3: 'object',
+                4: 'nature', 5: 'sky', 6: 'human', 7: 'vehicle'}
 
-    # Start initializing the output image
-    img_seg = np.zeros((mask.shape[0], mask.shape[1], 3), dtype='float')
+    # Initializing the output image
+    img = np.zeros((mask.shape[0], mask.shape[1], 3), dtype='float')
 
-    # Assign RGB channels
-    for cat in id2category.keys():
-        img_seg[:, :, 0] += mask[:, :, cat] * colors.to_rgb(colors_palette[cat])[0]
-        img_seg[:, :, 1] += mask[:, :, cat] * colors.to_rgb(colors_palette[cat])[1]
-        img_seg[:, :, 2] += mask[:, :, cat] * colors.to_rgb(colors_palette[cat])[2]
+    # Assigning RGB channels
+    for cat in CAT_DICT.keys():
+        img[:, :, 0] += mask[:, :, cat] * colors.to_rgb(palette[cat])[0]
+        img[:, :, 1] += mask[:, :, cat] * colors.to_rgb(palette[cat])[1]
+        img[:, :, 2] += mask[:, :, cat] * colors.to_rgb(palette[cat])[2]
 
-    return img_seg
+    return img
 
 
 def predict_segmentation(image_array, image_width, image_height):
     '''Generate a color mask from a model
     Args:
       image_array - Input image numpy array
-      model_path - Path to your Keras model
       image_width - int - Width (pixels) of the input image expected by the model
       image_height - int - Height (pixels) of the input image expected by the model
     Returns
@@ -70,7 +64,7 @@ def predict_segmentation(image_array, image_width, image_height):
     image_array = np.expand_dims(np.array(image_array), axis=0)
 
     # Predict the mask as an output of the model
-    mask_predict = MODEL.predict(image_array)
+    mask_predict = model.predict(image_array)
 
     # Squeeze the first dimension of the mask.
     # For example (1, x, y, z) -> (x, y, z)
