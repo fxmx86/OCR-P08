@@ -40,6 +40,6 @@ img_array = cv2.imdecode(np.frombuffer(r.content, np.uint8), -1)
 st.image(image_path, caption='Initial color image', width=WIDTH)
 st.image(image_mask, caption='Initial mask color image', width=WIDTH)
 
-# Display the image array of the mask color image, and legend
+# Display the image array of the mask color image, and caption
 st.image(img_array, caption='Predicted mask color image', width=WIDTH)
-st.image(legend, caption='Légende', width=WIDTH)
+st.image(legend, caption='Categories', width=WIDTH)
