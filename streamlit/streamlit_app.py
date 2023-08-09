@@ -26,21 +26,20 @@ image = st.selectbox( "Select the image you want to try :", images )
 
 image_path = REP+image+END
 image_mask = REP+image+MEND
+legend = REP+'Legende.jpg'
 
 # Create the image data to be used in the request
 image_data = {'image': open(image_path, 'rb')}
 
 # Send the request containing the image to the API and grab the response r
-# Remember r is the bytecodes of the mask color image
+# Then convert the bytecodes of the mask color image to numpy array
 r = requests.post(url, files=image_data)
-
-# Convert the bytes to numpy array
 img_array = cv2.imdecode(np.frombuffer(r.content, np.uint8), -1)
 
-# Display the initial color image
+# Display the initial color and mask images
 st.image(image_path, caption='Initial color image', width=WIDTH)
-# Display the initial mask color image
 st.image(image_mask, caption='Initial mask color image', width=WIDTH)
 
-# Display the image array of the mask color image
+# Display the image array of the mask color image, and legend
 st.image(img_array, caption='Predicted mask color image', width=WIDTH)
+st.image(legend, caption='Légende', width=WIDTH)

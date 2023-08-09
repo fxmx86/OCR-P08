@@ -22,7 +22,7 @@ model = load_model(MODEL_PATH, compile=False)
 
 
 #def generate_img_from_mask(mask, palette=['b', 'g', 'r', 'c', 'm', 'y', 'k', 'w']):
-def generate_img_from_mask(mask, palette=['gray', 'purple', 'black', 'steelblue', 'olivedrab', 'orange', 'red', 'mediumblue']):
+def generate_img_from_mask(mask, palette=['gray', 'purple', 'black', 'orange', 'olivedrab', 'steelblue', 'red', 'mediumblue']):
     '''Generate a color image array from a segmented mask
     Args:
       mask - numpy array of dimension
