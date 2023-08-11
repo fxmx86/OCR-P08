@@ -20,9 +20,31 @@ MODEL_INPUT_HEIGHT = 512
 # Load the Keras model
 model = load_model(MODEL_PATH, compile=False)
 
+#def generate_img_from_mask(mask, palette=['b', 'g', 'r', 'c', 'm', 'y', 'k', 'w']):
+def generate_img_from_mask(mask, palette=['gray', 'purple', 'black', 'steelblue', 'olivedrab', 'orange', 'mediumblue', 'red']):
+    '''Generate a color image array from a segmented mask
+    Args:
+      mask - numpy array of dimension
+      palette - colors list to be assigned to each class
+    Returns
+      Image array'''
+
+    CAT_DICT = {0: 'void', 1: 'flat', 2: 'construction', 3: 'object',
+                4: 'nature', 5: 'sky', 6: 'human', 7: 'vehicle'}
+
+    # Initializing the output image
+    img = np.zeros((mask.shape[0], mask.shape[1], 3), dtype='float')
+
+    # Assigning RGB channels
+    for cat in CAT_DICT.keys():
+        img[:, :, 0] += mask[:, :, cat] * colors.to_rgb(palette[cat])[0]
+        img[:, :, 1] += mask[:, :, cat] * colors.to_rgb(palette[cat])[1]
+        img[:, :, 2] += mask[:, :, cat] * colors.to_rgb(palette[cat])[2]
+
+    return img
+
 
 #def generate_img_from_mask(mask, palette=['b', 'g', 'r', 'c', 'm', 'y', 'k', 'w']):
-def generate_img_from_mask(mask, palette=['gray', 'purple', 'black', 'orange', 'olivedrab', 'steelblue', 'red', 'mediumblue']):
     '''Generate a color image array from a segmented mask
     Args:
       mask - numpy array of dimension
@@ -53,6 +75,28 @@ def generate_img_from_mask(mask, palette=['gray', 'purple', 'black', 'orange', '
 
     return img
 
+#def generate_img_from_mask(mask, palette=['b', 'g', 'r', 'c', 'm', 'y', 'k', 'w']):
+def generate_img_from_mask(mask, palette=['gray', 'purple', 'black', 'orange', 'olivedrab', 'steelblue', 'red', 'mediumblue']):
+    '''Generate a color image array from a segmented mask
+    Args:
+      mask - numpy array of dimension
+      palette - colors list to be assigned to each class
+    Returns
+      Image array'''
+
+    CAT_DICT = {0: 'void', 1: 'flat', 2: 'construction', 3: 'object',
+                4: 'nature', 5: 'sky', 6: 'human', 7: 'vehicle'}
+
+    # Initializing the output image
+    img = np.zeros((mask.shape[0], mask.shape[1], 3), dtype='float')
+
+    # Assigning RGB channels
+    for cat in CAT_DICT.keys():
+        img[:, :, 0] += mask[:, :, cat] * colors.to_rgb(palette[cat])[0]
+        img[:, :, 1] += mask[:, :, cat] * colors.to_rgb(palette[cat])[1]
+        img[:, :, 2] += mask[:, :, cat] * colors.to_rgb(palette[cat])[2]
+
+    return img
 
 def predict_segmentation(image_array, image_width, image_height):
     '''Generate a color mask from a model
