@@ -21,7 +21,7 @@ MODEL_INPUT_HEIGHT = 512
 model = load_model(MODEL_PATH, compile=False)
 
 #def generate_img_from_mask(mask, palette=['b', 'g', 'r', 'c', 'm', 'y', 'k', 'w']):
-def generate_img_from_mask(mask, palette=['gray', 'purple', 'black', 'steelblue', 'olivedrab', 'orange', 'mediumblue', 'red']):
+def generate_img_from_mask(mask, palette=['black', 'purple', 'gray', 'steelblue', 'olivedrab', 'orange', 'mediumblue', 'red']):
     '''Generate a color image array from a segmented mask
     Args:
       mask - numpy array of dimension
